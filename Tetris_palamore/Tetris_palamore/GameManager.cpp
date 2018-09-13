@@ -16,7 +16,7 @@ GameManager::GameManager()
 			Current_map[i][j] = 0;
 		}
 	}
-
+//	Current_map[0][0] = 1; 
 
 }
 
