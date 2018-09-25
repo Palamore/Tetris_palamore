@@ -1,2 +1,4 @@
 # Tetris_palamore
-tetris
+C++ Tetris!
+
+
