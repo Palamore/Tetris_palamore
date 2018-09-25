@@ -78,7 +78,7 @@ void Handler::move_left()
 
 void Handler::move_right()
 {
-	if (Block_pos.x < 10)
+	if (Block_pos.x < 7)
 		Block_pos.x++;
 }
 

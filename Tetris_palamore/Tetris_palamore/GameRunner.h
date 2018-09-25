@@ -24,7 +24,7 @@ private:
 	double interval = 0;
 
 	int kb_input;
-
+	int tmp;
 public:
 
 	void UI_renew_render();
