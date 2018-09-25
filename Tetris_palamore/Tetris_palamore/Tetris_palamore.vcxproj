@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameRunner.cpp" />
     <ClCompile Include="Handler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UIContainer.cpp" />
@@ -127,6 +128,7 @@
   <ItemGroup>
     <ClInclude Include="Block.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GameRunner.h" />
     <ClInclude Include="Handler.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="UIContainer.h" />
