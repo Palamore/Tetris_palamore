@@ -13,11 +13,12 @@ public:
 	GameRunner();
 	~GameRunner();
 
-private: 
+private:
 	GameManager GM;
 	Handler		HD;
 	UIContainer UC;
-	
+
+
 	DWORD start, end;
 
 	double gap_time = 0;

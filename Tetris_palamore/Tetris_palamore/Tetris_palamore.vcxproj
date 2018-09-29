@@ -130,7 +130,6 @@
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameRunner.h" />
     <ClInclude Include="Handler.h" />
-    <ClInclude Include="Macro.h" />
     <ClInclude Include="UIContainer.h" />
     <ClInclude Include="value.h" />
   </ItemGroup>

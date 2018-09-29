@@ -4,6 +4,7 @@
 
 GameRunner::GameRunner()
 {
+
 	HD.H_init(&GM);
 
 }
@@ -18,7 +19,7 @@ void GameRunner::UI_renew_render()
 	HD.H_D_init(&GM);
 
 	UC.get_Map_value(&HD);
-	
+
 	UC.Render();
 
 }
@@ -31,23 +32,23 @@ void GameRunner::Run()
 		start = GetTickCount();
 
 		if (_kbhit()) {
-	//		cout << "kbhit executed" << endl;
+			//		cout << "kbhit executed" << endl;
 			get_KB_input();
 			UI_renew_render();
 		}
 
-	//	cout << "kbhit over" << endl;
+		//	cout << "kbhit over" << endl;
 
 
 
 
 		if (interval > 0.7) {
 			interval -= 0.7;
-	//		cout << "interval executed" << endl;
+			//		cout << "interval executed" << endl;
 
 			tmp = HD.down();
 			if (tmp) {
-				
+
 				GM.renew_map(HD.get_x() + 1, HD.get_y() + 1, HD.get_Current_block().get_block());
 				GM.line_clear();
 				GM.slot_rotate();
@@ -61,7 +62,7 @@ void GameRunner::Run()
 
 		end = GetTickCount();
 
-//		cout << start << endl;
+		//		cout << start << endl;
 
 		gap_time = (end - start) / (double)1000;
 
@@ -70,7 +71,7 @@ void GameRunner::Run()
 
 
 	}
-	
+
 
 }
 
@@ -92,7 +93,7 @@ void GameRunner::get_KB_input()
 	case 80:            // 아래쪽 방향키
 		HD.down();
 		break;
-	case 10:            // 엔터 키
+	case 100:            // 엔터 키
 		HD.drop();
 		break;
 	}

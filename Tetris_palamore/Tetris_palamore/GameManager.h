@@ -17,6 +17,7 @@ public:
 
 	void slot_rotate();
 
+	void all_the_line_down(vector<int> v);
 	void line_clear();
 	void renew_map(int x, int y, int block[]);
 
@@ -25,6 +26,5 @@ public:
 	int* get_map();
 
 
-	void test_print();
 };
 

@@ -12,6 +12,6 @@ public:
 
 	int* get_block();
 	void rotate();
-	void test_printing();
+	void reverse_rotate();
 };
 

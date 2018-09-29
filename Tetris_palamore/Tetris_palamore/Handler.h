@@ -12,18 +12,21 @@ class Handler
 	_pos		Block_pos;
 	int			Realtime_map[15][10];
 	int			Current_stacked_map[15][10];
-	
+
 public:
 	Handler();
 	~Handler();
-
-
 
 	void H_init(GameManager *GM);
 	void H_D_init(GameManager *GM);
 
 	bool blocking_check();
-	
+	bool blocking_check_side(int a);
+
+	void on_the_map_check();
+
+	bool rotate_check();
+
 	void make_rotate();
 	void move_left();
 	void move_right();
@@ -37,7 +40,6 @@ public:
 
 	int* push_map_render();
 
-	void H_test_print();
 
 
 

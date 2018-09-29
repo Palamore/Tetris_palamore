@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <queue>
+#include <vector>
 using namespace std;
 
 #define STAGE_WIDTH		10
