@@ -1,4 +1,3 @@
 # Tetris_palamore
-C++ Tetris!
 
-
+CLI Tetrios
