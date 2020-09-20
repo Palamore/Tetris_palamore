@@ -27,10 +27,10 @@
     <ClCompile Include="Handler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="UIContainer.cpp">
+    <ClCompile Include="GameRunner.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="GameRunner.cpp">
+    <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClInclude Include="Handler.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="UIContainer.h">
+    <ClInclude Include="GameRunner.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="GameRunner.h">
+    <ClInclude Include="Renderer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

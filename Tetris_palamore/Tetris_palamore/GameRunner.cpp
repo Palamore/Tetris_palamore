@@ -1,104 +1,72 @@
 #include "GameRunner.h"
 
-
-
 GameRunner::GameRunner()
+	: start(0)
+	, end(0)
+	, mInput(0)
+	, mBlockTouchedFlag(0)
 {
-
-	HD.H_init(&GM);
-
+	HD.SetNextBlock(&GM);
 }
 
-
-GameRunner::~GameRunner()
+void GameRunner::RenderMap()
 {
-}
-
-void GameRunner::UI_renew_render()
-{
-	HD.H_D_init(&GM);
-
-	UC.get_Map_value(&HD);
-
-	UC.Render();
-
+	HD.UpdateRealtimeMap(&GM);
+	RD.GetMapValue(&HD);
+	RD.Render();
 }
 
 void GameRunner::Run()
 {
-
+	double gapTime = 0.0;
+	double interval = 0.0;
 	while (true) {
 
 		start = GetTickCount();
 
 		if (_kbhit()) {
-			//		cout << "kbhit executed" << endl;
-			get_KB_input();
-			UI_renew_render();
+			GetKeyboardInput();
+			RenderMap();
 		}
-
-		//	cout << "kbhit over" << endl;
-
-
-
-
 		if (interval > 0.7) {
 			interval -= 0.7;
-			//		cout << "interval executed" << endl;
-
-			tmp = HD.down();
-			if (tmp) {
-
-				GM.renew_map(HD.get_x() + 1, HD.get_y() + 1, HD.get_Current_block().get_block());
-				GM.line_clear();
-				GM.slot_rotate();
-				HD.H_init(&GM);
+			mBlockTouchedFlag = HD.MoveDown(); //Flag가 1리턴 시 블럭이 쌓임.
+			if (mBlockTouchedFlag) { 
+				GM.UpdateMap(HD.GetX() + 1, HD.GetY() + 1, HD.GetCurrentBlock().GetBlockValue());
+				GM.ClearLine();
+				GM.PopBlock();
+				HD.SetNextBlock(&GM);
 			}
-
-			UI_renew_render();
-
-
+			RenderMap();
 		}
-
 		end = GetTickCount();
 
-		//		cout << start << endl;
-
-		gap_time = (end - start) / (double)1000;
-
-		interval += gap_time;
-
-
-
+		gapTime = (end - start) / 1000.0;
+		interval += gapTime;
 	}
-
-
 }
 
-void GameRunner::get_KB_input()
+void GameRunner::GetKeyboardInput()
 {
-	kb_input = _getch();
-	switch (kb_input) {
+	mInput = _getch();
+	switch (mInput) {
 	default:
 		break;
 	case 72:            // 위 방향키
-		HD.make_rotate();  //안돌아감.
+		HD.Rotate();  
 		break;
 	case 75:            // 왼쪽 방향키
-		HD.move_left();
+		HD.MoveLeft();
 		break;
 	case 77:            // 오른쪽 방향키
-		HD.move_right();
+		HD.MoveRight();
 		break;
 	case 80:            // 아래쪽 방향키
-		HD.down();
+		HD.MoveDown();
 		break;
 	case 100:            // 엔터 키
-		HD.drop();
+		HD.Drop();
 		break;
 	}
-
-
-
 }
 

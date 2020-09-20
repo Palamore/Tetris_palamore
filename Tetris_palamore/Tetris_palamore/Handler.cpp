@@ -1,215 +1,178 @@
 #include "Handler.h"
 
-
-
-Handler::Handler()
+void Handler::SetNextBlock(GameManager *GM)  // 새로운 블록 init
 {
-
+	mBlock = GM->GetBlock();
+	memcpy(mRealtimeMap, GM->GetMapValue(), MAP_WIDTH * MAP_HEIGHT * sizeof(int));
+	memcpy(mCurrentMap, GM->GetMapValue(), MAP_WIDTH * MAP_HEIGHT * sizeof(int));
+	mBlockPosition.x = 0;
+	mBlockPosition.y = 0;
 }
 
-
-Handler::~Handler()
+void Handler::UpdateRealtimeMap(GameManager *GM)  // 매 프레임마다 Realtime_map에 블록 그래픽 덮어씌우기
 {
-}
-
-void Handler::H_init(GameManager *GM)  // 새로운 블록 init
-{
-	Current_moving_block = GM->get_current_block();
-	memcpy(Realtime_map, GM->get_map(), 600);
-	memcpy(Current_stacked_map, GM->get_map(), 600);
-	Block_pos.x = 0;
-	Block_pos.y = 0;
-}
-
-void Handler::H_D_init(GameManager *GM)  // 매 프레임마다 Realtime_map에 블록 그래픽 덮어씌우기
-{
-	Current_moving_block = GM->get_current_block();
-	memcpy(Realtime_map, GM->get_map(), 600);
-	int* block_tmp = Current_moving_block->get_block();
-	int  block_tmp2[16];
-	int tmp = 0;
-	memcpy(block_tmp2, block_tmp, 64);
-	for (int i = Block_pos.y; i < Block_pos.y + 4; i++) {
-		for (int j = Block_pos.x; j < Block_pos.x + 4; j++) {
-			if (block_tmp2[tmp] == 1)
-				Realtime_map[i][j] = 1;
-			tmp++;
+	memcpy(mRealtimeMap, GM->GetMapValue(), MAP_WIDTH * MAP_HEIGHT * sizeof(int));
+	int* blockValue = mBlock->GetBlockValue();
+	int index = 0;
+	for (int i = mBlockPosition.y; i < mBlockPosition.y + 4; i++) {
+		for (int j = mBlockPosition.x; j < mBlockPosition.x + 4; j++) {
+			if (blockValue[index] == 1)
+				mRealtimeMap[i][j] = 1;
+			index++;
 		}
 	}
 }
 
-bool Handler::blocking_check()
+bool Handler::CheckBlocking()
 {
-
-	int* block_tmp = Current_moving_block->get_block();
-	int block_tmp2[16];
-	memcpy(block_tmp2, block_tmp, 64);
-	int tmp = 0;
-	for (int i = Block_pos.y; i < Block_pos.y + 4; i++) {
-		for (int j = Block_pos.x; j < Block_pos.x + 4; j++) {
-			if (block_tmp2[tmp] == 1) {
+	int* blockValue = mBlock->GetBlockValue();
+	int index = 0;
+	for (int i = mBlockPosition.y; i < mBlockPosition.y + 4; i++) {
+		for (int j = mBlockPosition.x; j < mBlockPosition.x + 4; j++) {
+			if (blockValue[index] == 1) {
 				if (i == 14) {
-					//				cout << "i == 14 excuted " << endl;
 					return true;
 				}
-
-				if (Current_stacked_map[i + 1][j] == 1) {
-					//				cout << " i + 1 == 1 excuted" << endl;
+				if (mCurrentMap[i + 1][j] == 1) {
 					return true;
 				}
-
 			}
-			tmp++;
+			index++;
 		}
 	}
 	return false;
 }
 
-bool Handler::blocking_check_side(int a)
+bool Handler::CheckSideBlocking(int direction)
 {
+	int* blockValue = mBlock->GetBlockValue();
+	int index = 0;
+	if (direction == 1) { //왼쪽
 
-	int* block_tmp = Current_moving_block->get_block();
-	int block_tmp2[16];
-	memcpy(block_tmp2, block_tmp, 64);
-	int tmp = 0;
-	if (a == 1) {
-
-		for (int i = Block_pos.y; i < Block_pos.y + 4; i++) {
-			for (int j = Block_pos.x; j < Block_pos.x + 4; j++) {
-				if (block_tmp2[tmp] == 1) {
-					if (j == 0)
+		for (int i = mBlockPosition.y; i < mBlockPosition.y + 4; i++) {
+			for (int j = mBlockPosition.x; j < mBlockPosition.x + 4; j++) {
+				if (blockValue[index] == 1) {
+					if (j == 0) //맵의 가장 왼쪽일 경우
 						return true;
-
-					if (Current_stacked_map[i][j - 1] == 1) {
-						//				cout << " i + 1 == 1 excuted" << endl;
+					if (mCurrentMap[i][j - 1] == 1) { // 왼쪽에 이미 쌓인 블럭이 있을 경우
 						return true;
 					}
-
 				}
-				tmp++;
+				index++;
 			}
 		}
 	}
-	else {
-		for (int i = Block_pos.y; i < Block_pos.y + 4; i++) {
-			for (int j = Block_pos.x; j < Block_pos.x + 4; j++) {
-				if (block_tmp2[tmp] == 1) {
+	else { //오른쪽
+		for (int i = mBlockPosition.y; i < mBlockPosition.y + 4; i++) {
+			for (int j = mBlockPosition.x; j < mBlockPosition.x + 4; j++) {
+				if (blockValue[index] == 1) {
 					if (j == 9)
 						return true;
-
-					if (Current_stacked_map[i][j + 1] == 1) {
-						//				cout << "  + 1 == 1 excuted" << endl;
+					if (mCurrentMap[i][j + 1] == 1) {
 						return true;
 					}
-
 				}
-				tmp++;
+				index++;
 			}
 		}
 	}
 	return false;
 }
 
-void Handler::on_the_map_check()
+void Handler::GetBlockIntoMap()
 {
-	int* block_tmp = Current_moving_block->get_block();
-	int block_tmp2[16];
-	memcpy(block_tmp2, block_tmp, 64);
-	int tmp = 0;
-	for (int i = Block_pos.y; i < Block_pos.y + 4; i++) {
-		for (int j = Block_pos.x; j < Block_pos.x + 4; j++) {
-			if (block_tmp2[tmp] == 1) {
+	int* blockValue = mBlock->GetBlockValue();
+	int index = 0;
+	for (int i = mBlockPosition.y; i < mBlockPosition.y + 4; i++) {
+		for (int j = mBlockPosition.x; j < mBlockPosition.x + 4; j++) {
+			if (blockValue[index] == 1) {
 				if (j < 0) {
-					Block_pos.x++;
+					mBlockPosition.x++;
 					return;
 				}
 				if (j > 9) {
-					Block_pos.x--;
+					mBlockPosition.x--;
 					return;
 				}
 			}
-			tmp++;
+			index++;
 		}
 	}
-
 }
 
-bool Handler::rotate_check()
+bool Handler::ValidateRotation()
 {
-	int* block_tmp = Current_moving_block->get_block();
-	int block_tmp2[16];
-	memcpy(block_tmp2, block_tmp, 64);
-	int tmp = 0;
-	for (int i = Block_pos.y; i < Block_pos.y + 4; i++) {
-		for (int j = Block_pos.x; j < Block_pos.x + 4; j++) {
-			if (block_tmp2[tmp] == 1) {
-				if (Current_stacked_map[i][j] == 1) {
+	int* blockValue = mBlock->GetBlockValue();
+	int index = 0;
+	for (int i = mBlockPosition.y; i < mBlockPosition.y + 4; i++) {
+		for (int j = mBlockPosition.x; j < mBlockPosition.x + 4; j++) {
+			if (blockValue[index] == 1) {
+				if (mCurrentMap[i][j] == 1) {
 					return false;
 				}
 			}
-			tmp++;
+			index++;
 		}
 	}
 	return true;
 }
 
-void Handler::make_rotate()
+void Handler::Rotate()
 {
-	Current_moving_block->rotate();
-	on_the_map_check();
-	on_the_map_check();
-	if (!rotate_check()) {
-		Current_moving_block->reverse_rotate();
+	mBlock->Rotate();   //일단 rotate.
+	GetBlockIntoMap(); // 로테이션 후 블록이 맵 밖으로 나갔을 경우
+	GetBlockIntoMap(); // 맵 안으로 밀어넣기
+	if (!ValidateRotation()) { // rotate 이후 겹치는 블록이 있을 경우 원상태로 복구
+		mBlock->RotateReverse();
 	}
 }
 
-void Handler::move_left()
+void Handler::MoveLeft()
 {
-	if (!blocking_check_side(1))
-		Block_pos.x--;
+	if (!CheckSideBlocking(1))
+		mBlockPosition.x--;
 }
 
-void Handler::move_right()
+void Handler::MoveRight()
 {
-	if (!blocking_check_side(2))
-		Block_pos.x++;
+	if (!CheckSideBlocking(2))
+		mBlockPosition.x++;
 }
 
 // 블록이 쌓인 후의 로직은 Running에서 down의 리턴값에 따라서 결정.
-int Handler::down()    // down이 리턴하는 값에 따라서 down하느냐 맵을 갱신하느냐 결정.
+int Handler::MoveDown()    // down이 리턴하는 값에 따라서 down하느냐 맵을 갱신하느냐 결정.
 {
-	if (!blocking_check()) {
-		Block_pos.y++;
+	if (!CheckBlocking()) {
+		mBlockPosition.y++;
 		return 0;
 	}
 	else {
 		cout << "Blocked !! " << endl;
 		return 1;
 	}
-
 }
 
-void Handler::drop()
+void Handler::Drop()
 {
-	while (!down());
+	while (!MoveDown());
 }
 
-Block Handler::get_Current_block()
+Block Handler::GetCurrentBlock()
 {
-	return *Current_moving_block;
+	return *mBlock;
 }
 
-int Handler::get_x()
+int Handler::GetX()
 {
-	return Block_pos.x;
+	return mBlockPosition.x;
 }
 
-int Handler::get_y()
+int Handler::GetY()
 {
-	return Block_pos.y;
+	return mBlockPosition.y;
 }
 
-int * Handler::push_map_render()
+int * Handler::GetRealtimeMapValue()
 {
-	return *Realtime_map;		//받을때 포인터로 받은 후 새로운 배열 생성.그 배열로 memcpy해줄것
+	return *mRealtimeMap;		//받을때 포인터로 받은 후 새로운 배열 생성.그 배열로 memcpy해줄것
 }

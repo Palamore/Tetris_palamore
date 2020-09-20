@@ -2,7 +2,7 @@
 #include "Block.h"
 #include "GameManager.h"
 #include "Handler.h"
-#include "UIContainer.h"
+#include "Renderer.h"
 #include "GameRunner.h"
 
 
@@ -13,10 +13,7 @@ int main() {
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &curInfo);
 
 	GameRunner GR;
-
 	GR.Run();
-
-
 
 	return 0;
 }

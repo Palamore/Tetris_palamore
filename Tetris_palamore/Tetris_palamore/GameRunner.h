@@ -4,36 +4,24 @@
 #include "Block.h"
 #include "GameManager.h"
 #include "Handler.h"
-#include "UIContainer.h"
-
+#include "Renderer.h"
+#include "value.h"
 
 class GameRunner
 {
 public:
 	GameRunner();
-	~GameRunner();
-
+	~GameRunner() = default;
+	void RenderMap();
+	void Run();
+	void GetKeyboardInput();
 private:
 	GameManager GM;
-	Handler		HD;
-	UIContainer UC;
-
-
+	Handler	HD;
+	Renderer RD;
 	DWORD start, end;
-
-	double gap_time = 0;
-	double interval = 0;
-
-	int kb_input;
-	int tmp;
-public:
-
-	void UI_renew_render();
-
-	void Run();
-
-	void get_KB_input();
-
+	int mInput;
+	int mBlockTouchedFlag;
 
 };
 

@@ -3,15 +3,15 @@
 #include "value.h"
 class Block
 {
-	int block[16] = { 0, };
-	int b;
 public:
 	Block();
+	~Block() = default;
 
-	~Block();
+	int* GetBlockValue();
+	void Rotate();
+	void RotateReverse();
 
-	int* get_block();
-	void rotate();
-	void reverse_rotate();
+private:
+	int block[16] = { 0, };
 };
 

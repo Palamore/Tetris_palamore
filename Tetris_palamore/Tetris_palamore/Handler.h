@@ -7,41 +7,29 @@
 
 class Handler
 {
-
-	Block*		Current_moving_block;
-	_pos		Block_pos;
-	int			Realtime_map[15][10];
-	int			Current_stacked_map[15][10];
-
 public:
-	Handler();
-	~Handler();
+	Handler() = default;
+	~Handler() = default;
 
-	void H_init(GameManager *GM);
-	void H_D_init(GameManager *GM);
+	void SetNextBlock(GameManager *GM);
+	void UpdateRealtimeMap(GameManager *GM);
+	bool CheckBlocking();
+	bool CheckSideBlocking(int a);
+	void GetBlockIntoMap();
+	bool ValidateRotation();
+	void Rotate();
+	void MoveLeft();
+	void MoveRight();
+	int  MoveDown();
+	void Drop();
+	Block GetCurrentBlock();
+	int GetX(), GetY();
+	int* GetRealtimeMapValue();
 
-	bool blocking_check();
-	bool blocking_check_side(int a);
-
-	void on_the_map_check();
-
-	bool rotate_check();
-
-	void make_rotate();
-	void move_left();
-	void move_right();
-	int  down();
-	void drop();
-
-
-	Block get_Current_block();
-	int get_x(), get_y();
-
-
-	int* push_map_render();
-
-
-
-
+private:
+	unique_ptr<Block> mBlock;
+	_pos		mBlockPosition;
+	int			mRealtimeMap[15][10] = { 0, };
+	int			mCurrentMap[15][10] = { 0, };
 };
 
