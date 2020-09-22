@@ -30,7 +30,7 @@ void GameRunner::Run()
 		}
 		if (interval > 0.7) {
 			interval -= 0.7;
-			mBlockTouchedFlag = HD.MoveDown(); //Flag∞° 1∏Æ≈œ Ω√ ∫Ì∑∞¿Ã Ω◊¿”.
+			mBlockTouchedFlag = HD.MoveDown(); //FlagÍ∞Ä 1Î¶¨ÌÑ¥ ??Î∏îÎü≠???ìÏûÑ.
 			if (mBlockTouchedFlag) { 
 				GM.UpdateMap(HD.GetX() + 1, HD.GetY() + 1, HD.GetCurrentBlock().GetBlockValue());
 				GM.ClearLine();
@@ -52,19 +52,19 @@ void GameRunner::GetKeyboardInput()
 	switch (mInput) {
 	default:
 		break;
-	case 72:            // ¿ß πÊ«‚≈∞
+	case 72:            
 		HD.Rotate();  
 		break;
-	case 75:            // øﬁ¬  πÊ«‚≈∞
+	case 75:            
 		HD.MoveLeft();
 		break;
-	case 77:            // ø¿∏•¬  πÊ«‚≈∞
+	case 77:            
 		HD.MoveRight();
 		break;
-	case 80:            // æ∆∑°¬  πÊ«‚≈∞
+	case 80:            
 		HD.MoveDown();
 		break;
-	case 32:            // Ω∫∆‰¿ÃΩ∫ ≈∞
+	case 32:            
 		HD.Drop();
 		break;
 	}

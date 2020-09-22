@@ -9,6 +9,5 @@
 int main() {
 	GameRunner GR;
 	GR.Run();
-
 	return 0;
 }
