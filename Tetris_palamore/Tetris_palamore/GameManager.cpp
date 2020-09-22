@@ -1,13 +1,10 @@
 #include "GameManager.h"
 
-
-
 GameManager::GameManager()
 {
 	InsertNewBlock();
 	PopBlock();
 }
-
 
 void GameManager::InsertNewBlock()
 {
@@ -20,7 +17,6 @@ void GameManager::PopBlock()
 	mBlockContainer.pop();
 	InsertNewBlock();
 }
-
 
 void GameManager::ClearLine()
 {
@@ -62,15 +58,4 @@ void GameManager::UpdateMap(int x, int y, int blockValue[])
 			index++;
 		}
 	}
-}
-
-unique_ptr<Block> GameManager::GetBlock()
-{
-	return move(mBlock);
-}
-
-
-int* GameManager::GetMapValue()
-{
-	return *mCurrentMap; //주소값만 넘어가면 된다.
 }

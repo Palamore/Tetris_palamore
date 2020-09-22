@@ -32,11 +32,6 @@ Block::Block()
 	}
 }
 
-int* Block::GetBlockValue()
-{
-	return block;
-}
-
 void Block::Rotate()
 {
 	int tmp[16];

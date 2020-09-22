@@ -3,13 +3,12 @@
 void Handler::SetNextBlock(GameManager *GM)  // 새로운 블록 init
 {
 	mBlock = GM->GetBlock();
-	memcpy(mRealtimeMap, GM->GetMapValue(), MAP_WIDTH * MAP_HEIGHT * sizeof(int));
 	memcpy(mCurrentMap, GM->GetMapValue(), MAP_WIDTH * MAP_HEIGHT * sizeof(int));
 	mBlockPosition.x = 0;
 	mBlockPosition.y = 0;
 }
 
-void Handler::UpdateRealtimeMap(GameManager *GM)  // 매 프레임마다 Realtime_map에 블록 그래픽 덮어씌우기
+void Handler::UpdateRealtimeMap(GameManager *GM)  // 매 프레임마다 RealtimeMap에 블록 그래픽 덮어씌우기
 {
 	memcpy(mRealtimeMap, GM->GetMapValue(), MAP_WIDTH * MAP_HEIGHT * sizeof(int));
 	int* blockValue = mBlock->GetBlockValue();
@@ -157,22 +156,4 @@ void Handler::Drop()
 	while (!MoveDown());
 }
 
-Block Handler::GetCurrentBlock()
-{
-	return *mBlock;
-}
 
-int Handler::GetX()
-{
-	return mBlockPosition.x;
-}
-
-int Handler::GetY()
-{
-	return mBlockPosition.y;
-}
-
-int * Handler::GetRealtimeMapValue()
-{
-	return *mRealtimeMap;		//받을때 포인터로 받은 후 새로운 배열 생성.그 배열로 memcpy해줄것
-}

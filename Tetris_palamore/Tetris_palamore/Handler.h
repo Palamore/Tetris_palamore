@@ -22,9 +22,10 @@ public:
 	void MoveRight();
 	int  MoveDown();
 	void Drop();
-	Block GetCurrentBlock();
-	int GetX(), GetY();
-	int* GetRealtimeMapValue();
+	inline Block GetCurrentBlock();
+	inline int GetX();
+	inline int GetY();
+	inline int* GetRealtimeMapValue();
 
 private:
 	unique_ptr<Block> mBlock;
@@ -33,3 +34,22 @@ private:
 	int			mCurrentMap[15][10] = { 0, };
 };
 
+Block Handler::GetCurrentBlock()
+{
+	return *mBlock;
+}
+
+int Handler::GetX()
+{
+	return mBlockPosition.x;
+}
+
+int Handler::GetY()
+{
+	return mBlockPosition.y;
+}
+
+int* Handler::GetRealtimeMapValue()
+{
+	return *mRealtimeMap;		
+}

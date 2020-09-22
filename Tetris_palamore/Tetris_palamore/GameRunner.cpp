@@ -64,7 +64,7 @@ void GameRunner::GetKeyboardInput()
 	case 80:            // 아래쪽 방향키
 		HD.MoveDown();
 		break;
-	case 100:            // 엔터 키
+	case 32:            // 스페이스 키
 		HD.Drop();
 		break;
 	}

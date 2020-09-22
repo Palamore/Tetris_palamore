@@ -7,7 +7,7 @@ public:
 	Block();
 	~Block() = default;
 
-	int* GetBlockValue();
+	inline int* GetBlockValue();
 	void Rotate();
 	void RotateReverse();
 
@@ -15,3 +15,7 @@ private:
 	int block[16] = { 0, };
 };
 
+int* Block::GetBlockValue()
+{
+	return block;
+}
